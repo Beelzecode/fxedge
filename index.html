@@ -4,7 +4,7 @@
 
 
 
- <link rel="manifest" href="manifest.json">
+<link rel="manifest" href="manifest.json">
  <meta name="theme-color" content="#2196f3">
 
  <link rel="icon"  href="https://i.postimg.cc/KcPMZWR0/file-00000000250861f884dbe32afad0e088.png" type="image/png">
@@ -12,639 +12,399 @@
 
 
 
-    
+
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForexEdge - Firebase Cloud Version</title>
+    <title>ForexEdge Trading Platform</title>
     <style>
-        /* ===== BASIC RESET ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        /* ===== MAIN LAYOUT ===== */
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f9fafb;
-            color: #111827;
+            background: #ffffff;
+            color: #0f172a;
+            overflow-x: hidden;
         }
-
-        .container {
-            max-width: 480px;
-            margin: 0 auto;
-            background: white;
-            min-height: 100vh;
-            position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-
-        /* ===== PAGE SYSTEM ===== */
-        .page {
-            display: none;
-            padding-bottom: 100px;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        /* ===== HEADER ===== */
+        
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
-            padding-top: 3rem;
-            border-bottom: 1px solid #e5e7eb;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
             background: white;
         }
-
+        
         .logo {
-            height: 2.5rem;
+            height: 40px;
+            width: auto;
         }
-
-        .icon {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-        }
-
-        /* ===== BALANCE CARD ===== */
-        .balance-card {
-            margin: 1rem;
-            background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            padding: 1.5rem;
-            border: 1px solid #e5e7eb;
-        }
-
-        .balance-label {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .live-badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            background: #dbeafe;
-            color: #1e40af;
-            font-size: 0.75rem;
-            border-radius: 0.25rem;
-            font-weight: 600;
-        }
-
-        .balance-amount {
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-
-        /* ===== TRADE BUTTON ===== */
-        .trade-btn-container {
+        
+        .header-btns {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 1.5rem;
+            gap: 8px;
         }
-
-        .trade-btn {
-            width: 4rem;
-            height: 4rem;
-            background: #fbbf24;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .trade-btn:hover {
-            background: #f59e0b;
-        }
-
-        /* ===== TABS ===== */
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #e5e7eb;
-            margin: 0 1rem 1rem;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 1rem;
-            border: none;
+        
+        .settings-btn, .logout-btn {
             background: none;
+            border: none;
             cursor: pointer;
-            font-weight: 600;
-            color: #6b7280;
-            border-bottom: 2px solid transparent;
+            padding: 8px;
+            color: #64748b;
+            font-size: 13px;
         }
-
-        .tab.active {
-            color: #111827;
-            border-bottom-color: #111827;
+        
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border-radius: 6px;
+            padding: 6px 12px;
+            display: none;
         }
-
-        /* ===== INVESTOR CARD ===== */
-        .investor-card {
+        
+        .logout-btn.show {
+            display: block;
+        }
+        
+        .main-content {
+            padding: 16px;
+            padding-bottom: 100px;
+        }
+        
+        .currency-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .currency-logo {
+            height: 48px;
+            width: 48px;
+            object-fit: contain;
+        }
+        
+        .currency-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .currency-subtitle {
+            font-size: 14px;
+            color: #64748b;
+        }
+        
+        .chart-container {
+            position: relative;
             background: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-            padding: 1.5rem;
-            margin: 0 1rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            height: 400px;
+            touch-action: none;
         }
-
-        .investor-image {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 0.75rem;
-            background: #e5e7eb;
-            overflow: hidden;
-        }
-
-        .investor-image img {
+        
+        canvas {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            touch-action: none;
         }
-
-        /* ===== BOTTOM NAVIGATION ===== */
+        
+        .chart-tools {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            display: none;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .chart-tools.admin {
+            display: flex;
+        }
+        
+        .tool-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .tool-btn:hover {
+            background: #f1f5f9;
+        }
+        
+        .tool-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .tool-btn.finish {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+        
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+        
+        .btn {
+            height: 56px;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .btn-withdrawal {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-withdrawal:hover {
+            background: #dc2626;
+        }
+        
+        .btn-trade {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-trade:hover {
+            background: #059669;
+        }
+        
         .bottom-nav {
             position: fixed;
             bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
+            left: 0;
+            right: 0;
             background: white;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid #e2e8f0;
+            padding: 12px 16px;
+        }
+        
+        .nav-items {
             display: flex;
             justify-content: space-around;
-            padding: 0.75rem 0;
-            z-index: 1000;
+            max-width: 448px;
+            margin: 0 auto;
         }
-
+        
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0.5rem 1rem;
+            gap: 4px;
             background: none;
             border: none;
             cursor: pointer;
         }
-
+        
         .nav-icon {
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 0.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.875rem;
-            font-weight: bold;
-            margin-bottom: 0.375rem;
+            font-weight: 600;
+            font-size: 14px;
         }
-
-        .nav-icon.active {
-            background: #1f2937;
-            color: white;
-        }
-
+        
         .nav-icon.inactive {
-            background: #d1d5db;
-            color: #6b7280;
+            background: #e2e8f0;
+            color: #64748b;
         }
-
+        
+        .nav-icon.active {
+            background: #0f172a;
+            color: white;
+        }
+        
         .nav-label {
-            font-size: 0.75rem;
-            color: #6b7280;
+            font-size: 12px;
+            color: #64748b;
         }
-
-        /* ===== BUTTONS ===== */
-        .btn {
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
+        
+        .nav-label.active {
+            color: #0f172a;
+            font-weight: 600;
         }
-
-        .btn-primary {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #2563eb;
-        }
-
-        .btn-secondary {
-            background: #6b7280;
-            color: white;
-        }
-
-        .btn-delete {
-            background: #ef4444;
-            color: white;
-        }
-
-        .btn-invest {
-            background: #10b981;
-            color: white;
-        }
-
-        /* ===== CHART ===== */
-        .chart-container {
-            padding: 1rem;
-        }
-
-        canvas {
-            width: 100%;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.75rem;
-            background: white;
-            cursor: crosshair;
-        }
-
-        /* ===== FORMS ===== */
-        .form-input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-        }
-
-        /* ===== ADMIN CARD ===== */
-        .admin-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin: 1rem;
-        }
-
-        /* ===== LOGIN ===== */
-        .login-container {
-            min-height: 100vh;
-            display: flex;
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
             align-items: center;
             justify-content: center;
-            padding: 2rem;
-            background: #f3f4f6;
+            z-index: 1000;
         }
-
-        .login-card {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 3rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            max-width: 400px;
-            width: 100%;
-        }
-
-        /* ===== UTILITIES ===== */
-        .hidden {
-            display: none !important;
-        }
-
-        .flex {
+        
+        .modal.open {
             display: flex;
         }
-
-        .gap-2 {
-            gap: 0.5rem;
+        
+        .modal-content {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
         }
-
-        .gap-3 {
-            gap: 0.75rem;
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 16px;
         }
-
-        .items-center {
-            align-items: center;
+        
+        .input-group {
+            margin-bottom: 16px;
         }
-
-        .justify-between {
-            justify-content: space-between;
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
         }
-
-        .text-center {
-            text-align: center;
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
         }
-
-        .mb-2 {
-            margin-bottom: 0.5rem;
+        
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
         }
-
-        .mb-4 {
-            margin-bottom: 1rem;
+        
+        .btn-secondary {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
         }
-
-        .mt-2 {
-            margin-top: 0.5rem;
+        
+        .btn-primary {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: #0f172a;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        
-        <!-- ========================================
-             DASHBOARD PAGE
-             ======================================== -->
-        <div id="dashboardPage" class="page active">
-            <div class="header">
-                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e9f4988eb02a0fc6f79a26/69bc6fbc8_file_000000009284623084f16ffb3a2436b41.png" class="logo" alt="ForexEdge">
-                
-                <div class="flex gap-3">
-                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                    </svg>
-                    
-                    <svg class="icon" onclick="goToAdmin()" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    </svg>
-                </div>
-            </div>
+    <div class="header">
+        <div>
+            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_690ba922fbe430d3664faeaa/fa08d83cb_Screenshot_20250930_020839_Gallery.jpg" 
+                 alt="ForexEdge" class="logo">
+        </div>
+        <div class="header-btns">
+            <button class="settings-btn" onclick="openSettings()">⚙️</button>
+            <button class="logout-btn" id="logoutBtn" onclick="logout()">Logout</button>
+        </div>
+    </div>
 
-            <div class="balance-card">
-                <div class="balance-label">FOREXEDGE NET BALANCE</div>
-                <div class="mt-2">
-                    <span class="live-badge">● Live</span>
-                </div>
-                <div class="balance-amount">
-                    <span id="netBalance">Loading...</span> ZAR
-                </div>
-                
-                <div class="trade-btn-container">
-                    <button class="trade-btn" onclick="goToPage('tradePage')">
-                        <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                        </svg>
-                    </button>
-                    <div class="text-center mt-2" style="font-size: 0.875rem; font-weight: 600;">Trade</div>
-                </div>
-            </div>
-
-            <div class="tabs">
-                <button class="tab active">Live Investors</button>
-                <button class="tab">Pending</button>
-                <button class="tab">Closed</button>
-            </div>
-
-            <div style="padding: 0 1rem;">
-                <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem;">Current Investors</h3>
-                <div id="investorsList">Loading...</div>
+    <div class="main-content">
+        <div class="currency-header">
+            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/user_690ba922fbe430d3664faeaa/fa08d83cb_Screenshot_20250930_020839_Gallery.jpg" 
+                 alt="ForexEdge" class="currency-logo">
+            <div>
+                <div class="currency-title">EUR/USD</div>
+                <div class="currency-subtitle">European Euro / US Dollar</div>
             </div>
         </div>
 
-        <!-- ========================================
-             TRADE PAGE
-             ======================================== -->
-        <div id="tradePage" class="page">
-            <div class="header">
-                <button onclick="goToPage('dashboardPage')" style="background: none; border: none; cursor: pointer;">
-                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <div style="font-size: 1.25rem; font-weight: bold;">ForexEdge</div>
-                <div style="width: 2.5rem;"></div>
+        <div class="chart-container">
+            <div class="chart-tools" id="chartTools">
+                <button class="tool-btn" id="drawBtn" onclick="toggleDraw()">✏️ Draw</button>
+                <button class="tool-btn" id="finishBtn" onclick="finishLine()" style="display:none;">✓ Finish</button>
+                <button class="tool-btn" onclick="clearAllDrawings()">🗑️ Clear All</button>
             </div>
-
-            <div style="padding: 1rem;">
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e9f4988eb02a0fc6f79a26/69bc6fbc8_file_000000009284623084f16ffb3a2436b41.png" style="width: 2.5rem; height: 2.5rem;">
-                    <div>
-                        <div style="font-size: 1.5rem; font-weight: bold;">EUR/USD</div>
-                        <div style="font-size: 0.875rem; color: #6b7280;">European Euro / US Dollar</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <canvas id="tradeChart" width="440" height="300"></canvas>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.5rem;">
-                <button class="btn btn-delete" onclick="goToPage('withdrawalPage')">Withdrawal</button>
-                <button class="btn btn-invest" onclick="goToPage('investPage')">Invest</button>
-            </div>
+            <canvas id="chartCanvas"></canvas>
         </div>
 
-        <!-- ========================================
-             INVEST PAGE
-             ======================================== -->
-        <div id="investPage" class="page">
-            <div class="header">
-                <button onclick="goToPage('tradePage')" style="background: none; border: none; cursor: pointer;">
-                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <div>Start Investing</div>
-                <div style="width: 2.5rem;"></div>
-            </div>
-
-            <div class="admin-card">
-                <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">💰 Investment Information</h2>
-                <p class="mb-4">Minimum Investment: <strong>R5,000</strong></p>
-                
-                <div style="background: #f3f4f6; padding: 1.5rem; border-radius: 0.75rem; margin: 1rem 0;">
-                    <h3 style="font-weight: bold; margin-bottom: 0.5rem;">FNB Bank Details:</h3>
-                    <p><strong>Account:</strong> 63116681461</p>
-                    <p><strong>Type:</strong> Easy Account</p>
-                </div>
-
-                <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
-                    <p><strong>After depositing, send proof to:</strong></p>
-                    <p style="font-size: 1.1rem; margin-top: 0.5rem;"><strong>forexedge27@gmail.com</strong></p>
-                </div>
-
-                <button class="btn btn-primary" onclick="goToPage('tradePage')" style="width: 100%; margin-top: 1rem;">Back to Trading</button>
-            </div>
+        <div class="action-buttons">
+            <button class="btn btn-withdrawal" onclick="openWithdrawal()">Withdrawal</button>
+            <button class="btn btn-trade" onclick="openInvest()">Trade</button>
         </div>
+    </div>
 
-        <!-- ========================================
-             WITHDRAWAL PAGE
-             ======================================== -->
-        <div id="withdrawalPage" class="page">
-            <div class="header">
-                <button onclick="goToPage('tradePage')" style="background: none; border: none; cursor: pointer;">
-                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
-                </button>
-                <div>Request Withdrawal</div>
-                <div style="width: 2.5rem;"></div>
-            </div>
-
-            <div class="admin-card">
-                <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">💳 Withdrawal Process</h2>
-                
-                <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
-                    <p><strong>Send withdrawal request to:</strong></p>
-                    <p style="font-size: 1.1rem; margin-top: 0.5rem;"><strong>forexedge27@gmail.com</strong></p>
-                </div>
-
-                <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
-                    <p style="font-weight: bold;">⚠️ NEVER share your PIN or CVV!</p>
-                    <p style="margin-top: 0.5rem;">We only need card number and expiry date for processing.</p>
-                </div>
-
-                <button class="btn btn-primary" onclick="goToPage('tradePage')" style="width: 100%; margin-top: 1rem;">Back to Trading</button>
-            </div>
-        </div>
-
-        <!-- ========================================
-             ADMIN LOGIN PAGE
-             ======================================== -->
-        <div id="adminLoginPage" class="page">
-            <div class="login-container">
-                <div class="login-card">
-                    <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e9f4988eb02a0fc6f79a26/69bc6fbc8_file_000000009284623084f16ffb3a2436b41.png" style="width: 5rem; height: 5rem; margin: 0 auto 1.5rem; display: block;">
-                    
-                    <h1 style="font-size: 1.75rem; font-weight: bold; text-align: center; margin-bottom: 0.5rem;">ForexEdge Admin</h1>
-                    <p class="text-center mb-4" style="color: #6b7280;">Enter your credentials</p>
-                    
-                    <input type="password" id="adminPassword" class="form-input" placeholder="Enter admin password" onkeypress="if(event.key==='Enter') adminLogin()">
-                    
-                    <div id="loginError" class="hidden" style="color: #ef4444; text-align: center; margin-bottom: 1rem;"></div>
-                    
-                    <button class="btn btn-primary" onclick="adminLogin()" style="width: 100%;">Access Admin Panel</button>
-                    <button class="btn btn-secondary" onclick="goToPage('dashboardPage')" style="width: 100%; margin-top: 0.5rem;">Back to Dashboard</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========================================
-             ADMIN PANEL
-             ======================================== -->
-        <div id="adminPanel" class="page">
-            <div class="header">
-                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68e9f4988eb02a0fc6f79a26/69bc6fbc8_file_000000009284623084f16ffb3a2436b41.png" class="logo">
-                <button class="btn btn-secondary" onclick="adminLogout()" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Logout</button>
-            </div>
-
-            <div class="tabs">
-                <button class="tab active" onclick="switchAdminTab('balance', event)">💰 Balance</button>
-                <button class="tab" onclick="switchAdminTab('investors', event)">👥 Investors</button>
-                <button class="tab" onclick="switchAdminTab('chart', event)">📈 Chart</button>
-            </div>
-
-            <!-- Balance Tab -->
-            <div id="adminBalanceTab" class="admin-card">
-                <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">💰 Net Balance</h2>
-                <div style="font-size: 3rem; font-weight: 900; margin-bottom: 2rem; color: #10b981;">
-                    <span id="adminNetBalance">Loading...</span> ZAR
-                </div>
-                <input type="text" id="newBalance" class="form-input" placeholder="Enter new balance">
-                <button class="btn btn-primary" onclick="updateBalance()" style="width: 100%;">💾 Update Balance</button>
-            </div>
-
-            <!-- Investors Tab -->
-            <div id="adminInvestorsTab" class="admin-card hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 style="font-size: 2rem; font-weight: bold;">👥 Investors</h2>
-                    <button class="btn btn-primary" onclick="showAddForm()">➕ Add</button>
-                </div>
-                
-                <div id="addInvestorForm" class="hidden" style="background: #f9fafb; padding: 2rem; border-radius: 1rem; margin-bottom: 2rem;">
-                    <h3 style="font-weight: bold; margin-bottom: 1rem;">Add New Investor</h3>
-                    <input type="text" id="investorName" class="form-input" placeholder="Full Name *">
-                    <input type="number" id="investorBalance" class="form-input" placeholder="Balance *">
-                    <input type="number" id="investorProfit" class="form-input" placeholder="Profit">
-                    <input type="number" id="investorProfitPercentage" class="form-input" placeholder="Profit %">
-                    <input type="text" id="investorProfileImage" class="form-input" placeholder="Profile Image URL">
-                    <div class="flex gap-2">
-                        <button class="btn btn-primary" onclick="addInvestor()" style="flex: 1;">✅ Add</button>
-                        <button class="btn btn-secondary" onclick="hideAddForm()">❌ Cancel</button>
-                    </div>
-                </div>
-                
-                <div id="adminInvestorsList">Loading...</div>
-            </div>
-
-            <!-- Chart Tab -->
-            <div id="adminChartTab" class="admin-card hidden">
-                <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">📈 Chart Editor</h2>
-                
-                <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 1rem; border-radius: 0.5rem; margin-bottom: 2rem;">
-                    <h3 style="font-weight: bold; margin-bottom: 0.5rem;">🎨 How to Edit Chart</h3>
-                    <ul style="margin-left: 1.5rem;">
-                        <li>• Click Blue/Red button to select line</li>
-                        <li>• Click anywhere on canvas to add points</li>
-                        <li>• Click Save to store in Firebase</li>
-                        <li>• Clear to remove all points</li>
-                    </ul>
-                </div>
-                
-                <div class="flex gap-2 mb-4" style="flex-wrap: wrap;">
-                    <button class="btn btn-primary" id="adminBlueLine" onclick="selectAdminLine('blue')" style="flex: 1;">🔵 Blue Line</button>
-                    <button class="btn btn-delete" id="adminRedLine" onclick="selectAdminLine('red')" style="flex: 1;">🔴 Red Line</button>
-                    <button class="btn btn-secondary" onclick="clearAdminChart()" style="flex: 1;">🗑️ Clear</button>
-                    <button class="btn btn-invest" onclick="saveAdminChart()" style="flex: 1;">💾 Save</button>
-                </div>
-                
-                <div class="chart-container">
-                    <canvas id="adminChart" width="440" height="300"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========================================
-             BOTTOM NAVIGATION
-             ======================================== -->
-        <div class="bottom-nav">
-            <button class="nav-item" onclick="goToPage('dashboardPage')">
-                <div class="nav-icon active" id="navAccounts">A</div>
-                <div class="nav-label">Accounts</div>
+    <div class="bottom-nav">
+        <div class="nav-items">
+            <button class="nav-item">
+                <div class="nav-icon inactive">A</div>
+                <span class="nav-label">Accounts</span>
             </button>
-            <button class="nav-item" onclick="goToPage('tradePage')">
-                <div class="nav-icon inactive" id="navTrade">T</div>
-                <div class="nav-label">Trade</div>
+            <button class="nav-item">
+                <div class="nav-icon active">T</div>
+                <span class="nav-label active">Trade</span>
             </button>
             <button class="nav-item">
                 <div class="nav-icon inactive">I</div>
-                <div class="nav-label">Insights</div>
+                <span class="nav-label">Insights</span>
             </button>
             <button class="nav-item">
                 <div class="nav-icon inactive">P</div>
-                <div class="nav-label">Performance</div>
+                <span class="nav-label">Performance</span>
             </button>
             <button class="nav-item">
                 <div class="nav-icon inactive">Pr</div>
-                <div class="nav-label">Profile</div>
+                <span class="nav-label">Profile</span>
             </button>
         </div>
     </div>
 
-    <!-- ========================================
-         FIREBASE SDK
-         ======================================== -->
-    <script type="module">
-        // Import Firebase modules
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-        import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js';
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Admin Login</div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="passwordInput" placeholder="Enter password">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="closeSettings()">Cancel</button>
+                <button class="btn-primary" onclick="authenticate()">Login</button>
+            </div>
+        </div>
+    </div>
 
-        // ========================================
-        // FIREBASE CONFIGURATION
-        // ========================================
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
         const firebaseConfig = {
             apiKey: "AIzaSyCh14tX6MwH1sl1X0k8chnhiNNYU1l41cs",
             authDomain: "forexedge-ea59e.firebaseapp.com",
@@ -655,545 +415,226 @@
             measurementId: "G-QZLYE04XSK"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const analytics = getAnalytics(app);
 
-        console.log('🔥 Firebase Connected!');
-        console.log('📊 Firestore Database Ready!');
+        const canvas = document.getElementById('chartCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawMode = false;
+        let isAuthenticated = false;
+        let currentPoints = [];
+        let allLines = [];
 
-        // ========================================
-        // FIRESTORE DATABASE FUNCTIONS
-        // ========================================
-        window.DB = {
-            // Get all investors from Firestore
-            getInvestors: async () => {
-                const investorsCol = collection(db, 'investors');
-                const investorSnapshot = await getDocs(investorsCol);
-                return investorSnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-            },
-
-            // Add investor to Firestore
-            addInvestor: async (investorData) => {
-                const investorsCol = collection(db, 'investors');
-                const docRef = await addDoc(investorsCol, {
-                    ...investorData,
-                    createdAt: new Date().toISOString()
-                });
-                return docRef.id;
-            },
-
-            // Delete investor from Firestore
-            deleteInvestor: async (investorId) => {
-                await deleteDoc(doc(db, 'investors', investorId));
-            },
-
-            // Get balance from Firestore
-            getBalance: async () => {
-                const settingsDoc = doc(db, 'settings', 'balance');
-                const snapshot = await getDocs(collection(db, 'settings'));
-                const balanceDoc = snapshot.docs.find(d => d.id === 'balance');
-                if (balanceDoc) {
-                    return balanceDoc.data().value;
-                }
-                return '342,556,334.54';
-            },
-
-            // Save balance to Firestore
-            saveBalance: async (balance) => {
-                const settingsDoc = doc(db, 'settings', 'balance');
-                await setDoc(settingsDoc, {
-                    value: balance,
-                    updatedAt: new Date().toISOString()
-                });
-            },
-
-            // Get chart data from Firestore
-            getChartData: async () => {
-                const chartDoc = doc(db, 'settings', 'chartData');
-                const snapshot = await getDocs(collection(db, 'settings'));
-                const chartDataDoc = snapshot.docs.find(d => d.id === 'chartData');
-                if (chartDataDoc) {
-                    return chartDataDoc.data();
-                }
-                return {
-                    blueLine: [],
-                    redLine: []
-                };
-            },
-
-            // Save chart data to Firestore
-            saveChartData: async (chartData) => {
-                const chartDoc = doc(db, 'settings', 'chartData');
-                await setDoc(chartDoc, {
-                    blueLine: chartData.blueLine,
-                    redLine: chartData.redLine,
-                    updatedAt: new Date().toISOString()
-                });
-            },
-
-            // Listen to investors changes in real-time
-            listenToInvestors: (callback) => {
-                const investorsCol = collection(db, 'investors');
-                return onSnapshot(investorsCol, (snapshot) => {
-                    const investors = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }));
-                    callback(investors);
-                });
-            },
-
-            // Listen to balance changes in real-time
-            listenToBalance: (callback) => {
-                const settingsCol = collection(db, 'settings');
-                return onSnapshot(settingsCol, (snapshot) => {
-                    const balanceDoc = snapshot.docs.find(d => d.id === 'balance');
-                    if (balanceDoc) {
-                        callback(balanceDoc.data().value);
-                    }
-                });
-            }
-        };
-
-        // ========================================
-        // NAVIGATION SYSTEM
-        // ========================================
-        window.goToPage = (pageId) => {
-            console.log('Navigating to:', pageId);
-            
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            document.getElementById(pageId).classList.add('active');
-            
-            document.querySelectorAll('.nav-icon').forEach(icon => {
-                icon.classList.remove('active');
-                icon.classList.add('inactive');
-            });
-            
-            if (pageId === 'dashboardPage') {
-                document.getElementById('navAccounts').classList.add('active');
-                document.getElementById('navAccounts').classList.remove('inactive');
-                loadInvestors();
-            } else if (pageId === 'tradePage') {
-                document.getElementById('navTrade').classList.add('active');
-                document.getElementById('navTrade').classList.remove('inactive');
-                setTimeout(() => drawTradeChart(), 100);
-            }
-        };
-
-        window.goToAdmin = () => {
-            goToPage('adminLoginPage');
-        };
-
-        // ========================================
-        // INVESTORS MANAGEMENT
-        // ========================================
-        window.loadInvestors = async () => {
-            console.log('📥 Loading investors from Firebase...');
-            const investors = await DB.getInvestors();
-            const container = document.getElementById('investorsList');
-            container.innerHTML = '';
-            
-            if (investors.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #6b7280; padding: 2rem;">No investors yet. Add investors in Admin Panel.</p>';
-                return;
-            }
-            
-            investors.forEach(investor => {
-                const profit = investor.profit || 0;
-                const isPositive = profit >= 0;
-                
-                const card = document.createElement('div');
-                card.className = 'investor-card flex gap-3';
-                card.innerHTML = `
-                    <div class="investor-image">
-                        ${investor.profile_image ? 
-                            `<img src="${investor.profile_image}" alt="${investor.name}">` : 
-                            `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; color: #9ca3af;">${investor.name.charAt(0)}</div>`
-                        }
-                    </div>
-                    <div style="flex: 1;">
-                        <div class="flex justify-between mb-2">
-                            <div>
-                                <div style="font-size: 1.25rem; font-weight: bold;">${investor.name}</div>
-                                <div style="font-size: 0.875rem; color: #6b7280;">Active Investor</div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-size: 1.5rem; font-weight: bold;">${investor.balance.toLocaleString()} ZAR</div>
-                                <div style="font-size: 0.875rem; color: ${isPositive ? '#10b981' : '#ef4444'}; font-weight: 700;">
-                                    ${profit > 0 ? '+' : ''}${profit.toLocaleString()} (${investor.profit_percentage || 0}%)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-            console.log('✅ Loaded', investors.length, 'investors from Firebase');
-        };
-
-        window.updateBalanceDisplay = async () => {
-            const balance = await DB.getBalance();
-            document.getElementById('netBalance').textContent = balance;
-        };
-
-        // ========================================
-        // CHART DRAWING SYSTEM
-        // ========================================
-        window.drawTradeChart = async () => {
-            console.log('📈 Drawing trade chart...');
-            const canvas = document.getElementById('tradeChart');
-            if (!canvas) return;
-            
-            const ctx = canvas.getContext('2d');
-            const width = canvas.width;
-            const height = canvas.height;
-            
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, width, height);
-            
-            ctx.strokeStyle = '#e5e7eb';
-            ctx.lineWidth = 1;
-            
-            for (let i = 0; i <= 5; i++) {
-                const y = (height / 5) * i;
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(width, y);
-                ctx.stroke();
-            }
-            
-            for (let i = 0; i <= 10; i++) {
-                const x = (width / 10) * i;
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, height);
-                ctx.stroke();
-            }
-            
-            const chartData = await DB.getChartData();
-            const blueLine = chartData.blueLine || [];
-            const redLine = chartData.redLine || [];
-            
-            if (redLine.length > 0) {
-                ctx.strokeStyle = '#ef4444';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                redLine.forEach((point, index) => {
-                    const x = point.x * width;
-                    const y = height - (point.y * height);
-                    if (index === 0) {
-                        ctx.moveTo(x, y);
-                    } else {
-                        ctx.lineTo(x, y);
-                    }
-                });
-                ctx.stroke();
-                
-                const lastRedPoint = redLine[redLine.length - 1];
-                ctx.fillStyle = '#f97316';
-                ctx.fillRect(width - 70, height - (lastRedPoint.y * height) - 12, 65, 24);
-                ctx.fillStyle = '#fff';
-                ctx.font = 'bold 12px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('1.57%', width - 37.5, height - (lastRedPoint.y * height) + 3);
-            }
-            
-            if (blueLine.length > 0) {
-                ctx.strokeStyle = '#3b82f6';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                blueLine.forEach((point, index) => {
-                    const x = point.x * width;
-                    const y = height - (point.y * height);
-                    if (index === 0) {
-                        ctx.moveTo(x, y);
-                    } else {
-                        ctx.lineTo(x, y);
-                    }
-                });
-                ctx.stroke();
-                
-                const lastBluePoint = blueLine[blueLine.length - 1];
-                ctx.fillStyle = '#6366f1';
-                ctx.fillRect(width - 70, height - (lastBluePoint.y * height) - 12, 65, 24);
-                ctx.fillStyle = '#fff';
-                ctx.font = 'bold 12px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('-6.30%', width - 37.5, height - (lastBluePoint.y * height) + 3);
-            }
-        };
-
-        // ========================================
-        // ADMIN FUNCTIONS
-        // ========================================
-        window.adminLogin = () => {
-            const password = document.getElementById('adminPassword').value;
-            const error = document.getElementById('loginError');
-            
-            if (password === 'VNAXXTTM') {
-                error.classList.add('hidden');
-                goToPage('adminPanel');
-                loadAdminData();
-            } else {
-                error.textContent = '❌ Invalid password';
-                error.classList.remove('hidden');
-            }
-        };
-
-        window.adminLogout = () => {
-            goToPage('dashboardPage');
-        };
-
-        window.loadAdminData = async () => {
-            const balance = await DB.getBalance();
-            document.getElementById('adminNetBalance').textContent = balance;
-            document.getElementById('newBalance').value = balance;
-            loadAdminInvestors();
-            setTimeout(() => drawAdminChart(), 100);
-        };
-
-        window.updateBalance = async () => {
-            const newBalance = document.getElementById('newBalance').value;
-            await DB.saveBalance(newBalance);
-            document.getElementById('adminNetBalance').textContent = newBalance;
-            updateBalanceDisplay();
-            alert('✅ Balance updated to ' + newBalance + ' ZAR and saved to Firebase!');
-        };
-
-        window.switchAdminTab = (tab, event) => {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            document.getElementById('adminBalanceTab').classList.toggle('hidden', tab !== 'balance');
-            document.getElementById('adminInvestorsTab').classList.toggle('hidden', tab !== 'investors');
-            document.getElementById('adminChartTab').classList.toggle('hidden', tab !== 'chart');
-            
-            if (tab === 'chart') {
-                setTimeout(() => drawAdminChart(), 100);
-            } else if (tab === 'investors') {
-                loadAdminInvestors();
-            }
-        };
-
-        window.showAddForm = () => {
-            document.getElementById('addInvestorForm').classList.remove('hidden');
-        };
-
-        window.hideAddForm = () => {
-            document.getElementById('addInvestorForm').classList.add('hidden');
-        };
-
-        window.addInvestor = async () => {
-            const newInvestor = {
-                name: document.getElementById('investorName').value,
-                balance: parseFloat(document.getElementById('investorBalance').value) || 0,
-                profit: parseFloat(document.getElementById('investorProfit').value) || 0,
-                profit_percentage: parseFloat(document.getElementById('investorProfitPercentage').value) || 0,
-                profile_image: document.getElementById('investorProfileImage').value,
-                status: 'active'
-            };
-            
-            if (!newInvestor.name || !newInvestor.balance) {
-                alert('⚠️ Name and Balance required!');
-                return;
-            }
-            
-            await DB.addInvestor(newInvestor);
-            
-            document.getElementById('investorName').value = '';
-            document.getElementById('investorBalance').value = '';
-            document.getElementById('investorProfit').value = '';
-            document.getElementById('investorProfitPercentage').value = '';
-            document.getElementById('investorProfileImage').value = '';
-            
-            hideAddForm();
-            loadAdminInvestors();
-            loadInvestors();
-            alert('✅ Investor "' + newInvestor.name + '" added to Firebase!');
-        };
-
-        window.loadAdminInvestors = async () => {
-            const investors = await DB.getInvestors();
-            const container = document.getElementById('adminInvestorsList');
-            container.innerHTML = '';
-            
-            investors.forEach(investor => {
-                const div = document.createElement('div');
-                div.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 2px solid #e5e7eb; border-radius: 1rem; margin-bottom: 1rem; background: #fff;';
-                div.innerHTML = `
-                    <div>
-                        <h4 style="font-size: 1.25rem; font-weight: bold;">${investor.name}</h4>
-                        <p style="color: #6b7280;">${investor.balance.toLocaleString()} ZAR</p>
-                    </div>
-                    <button class="btn btn-delete" onclick="deleteInvestor('${investor.id}')">🗑️ Delete</button>
-                `;
-                container.appendChild(div);
-            });
-        };
-
-        window.deleteInvestor = async (id) => {
-            if (!confirm('⚠️ Delete this investor from Firebase?')) return;
-            
-            await DB.deleteInvestor(id);
-            
-            loadAdminInvestors();
-            loadInvestors();
-            alert('✅ Investor deleted from Firebase!');
-        };
-
-        // ========================================
-        // ADMIN CHART EDITOR WITH CLICK TO DRAW
-        // ========================================
-        let adminActiveLine = 'blue';
-        let adminChartData = { blueLine: [], redLine: [] };
-
-        window.selectAdminLine = (line) => {
-            adminActiveLine = line;
-            document.getElementById('adminBlueLine').className = line === 'blue' ? 'btn btn-primary' : 'btn btn-secondary';
-            document.getElementById('adminRedLine').className = line === 'red' ? 'btn btn-delete' : 'btn btn-secondary';
-            console.log('✏️ Selected line:', line);
-        };
-
-        window.clearAdminChart = () => {
-            if (!confirm('⚠️ Clear all chart data?')) return;
-            adminChartData = { blueLine: [], redLine: [] };
-            drawAdminChart();
-            alert('✅ Chart cleared!');
-        };
-
-        window.saveAdminChart = async () => {
-            await DB.saveChartData(adminChartData);
-            alert('✅ Chart saved to Firebase! Changes will appear on Trade page.');
-            drawTradeChart();
-            console.log('💾 Chart saved to Firebase');
-        };
-
-        window.drawAdminChart = async () => {
-            const canvas = document.getElementById('adminChart');
-            if (!canvas) return;
-            
-            const saved = await DB.getChartData();
-            adminChartData = {
-                blueLine: saved.blueLine || [],
-                redLine: saved.redLine || []
-            };
-            
-            const ctx = canvas.getContext('2d');
-            const width = canvas.width;
-            const height = canvas.height;
-            
-            ctx.fillStyle = '#fff';
-            ctx.fillRect(0, 0, width, height);
-            
-            ctx.strokeStyle = '#e5e7eb';
-            ctx.lineWidth = 1;
-            for (let i = 0; i <= 5; i++) {
-                const y = (height / 5) * i;
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(width, y);
-                ctx.stroke();
-            }
-            for (let i = 0; i <= 10; i++) {
-                const x = (width / 10) * i;
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, height);
-                ctx.stroke();
-            }
-            
-            if (adminChartData.redLine.length > 0) {
-                ctx.strokeStyle = '#ef4444';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                adminChartData.redLine.forEach((p, i) => {
-                    const x = p.x * width;
-                    const y = height - (p.y * height);
-                    if (i === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                });
-                ctx.stroke();
-            }
-            
-            if (adminChartData.blueLine.length > 0) {
-                ctx.strokeStyle = '#3b82f6';
-                ctx.lineWidth = 3;
-                ctx.beginPath();
-                adminChartData.blueLine.forEach((p, i) => {
-                    const x = p.x * width;
-                    const y = height - (p.y * height);
-                    if (i === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                });
-                ctx.stroke();
-            }
-            
-            ctx.fillStyle = adminActiveLine === 'blue' ? '#3b82f6' : '#ef4444';
-            ctx.fillRect(10, 10, 160, 45);
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 18px sans-serif';
-            ctx.textAlign = 'left';
-            ctx.fillText('Drawing: ' + adminActiveLine.toUpperCase(), 20, 40);
-            console.log('✅ Admin chart drawn');
-        };
-
-        window.handleAdminChartClick = (e) => {
-            const canvas = e.target;
+        function resizeCanvas() {
             const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width;
-            const y = 1 - ((e.clientY - rect.top) / rect.height);
-            
-            const newPoint = { x, y };
-            
-            if (adminActiveLine === 'blue') {
-                adminChartData.blueLine.push(newPoint);
-                adminChartData.blueLine.sort((a, b) => a.x - b.x);
-            } else {
-                adminChartData.redLine.push(newPoint);
-                adminChartData.redLine.sort((a, b) => a.x - b.x);
-            }
-            
-            drawAdminChart();
-            console.log('📍 Point added at:', newPoint);
-        };
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            drawChart();
+        }
 
-        // ========================================
-        // INITIALIZATION
-        // ========================================
-        window.addEventListener('load', () => {
-            console.log('🎉 ForexEdge with Firebase Ready!');
-            console.log('🔥 Connected to Firestore Cloud Database');
-            
-            updateBalanceDisplay();
-            loadInvestors();
-            
-            const adminCanvas = document.getElementById('adminChart');
-            if (adminCanvas) {
-                adminCanvas.addEventListener('click', handleAdminChartClick);
-            }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-            // Setup real-time listeners
-            DB.listenToInvestors((investors) => {
-                console.log('🔄 Investors updated in real-time:', investors.length);
-                loadInvestors();
+        onSnapshot(collection(db, 'drawings'), (snapshot) => {
+            allLines = [];
+            snapshot.forEach((document) => {
+                allLines.push({ id: document.id, points: document.data().points });
             });
-
-            DB.listenToBalance((balance) => {
-                console.log('🔄 Balance updated in real-time:', balance);
-                updateBalanceDisplay();
-            });
+            drawChart();
         });
+
+        function drawChart() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = '#f1f5f9';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 40) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+            
+            allLines.forEach(line => {
+                if (line.points && line.points.length > 1) {
+                    ctx.strokeStyle = '#3b82f6';
+                    ctx.lineWidth = 3;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(line.points[0].x, line.points[0].y);
+                    for (let i = 1; i < line.points.length; i++) {
+                        ctx.lineTo(line.points[i].x, line.points[i].y);
+                    }
+                    ctx.stroke();
+                }
+            });
+            
+            if (currentPoints.length > 0) {
+                ctx.strokeStyle = '#3b82f6';
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.beginPath();
+                ctx.moveTo(currentPoints[0].x, currentPoints[0].y);
+                for (let i = 1; i < currentPoints.length; i++) {
+                    ctx.lineTo(currentPoints[i].x, currentPoints[i].y);
+                }
+                ctx.stroke();
+
+                currentPoints.forEach(point => {
+                    ctx.fillStyle = '#3b82f6';
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            }
+        }
+
+        window.toggleDraw = function() {
+            if (!isAuthenticated) {
+                alert('Please login first');
+                return;
+            }
+            drawMode = !drawMode;
+            const btn = document.getElementById('drawBtn');
+            if (drawMode) {
+                btn.classList.add('active');
+                currentPoints = [];
+                document.getElementById('finishBtn').style.display = 'none';
+            } else {
+                btn.classList.remove('active');
+                currentPoints = [];
+                document.getElementById('finishBtn').style.display = 'none';
+                drawChart();
+            }
+        }
+
+        window.finishLine = async function() {
+            if (currentPoints.length > 1) {
+                try {
+                    await addDoc(collection(db, 'drawings'), {
+                        points: currentPoints,
+                        timestamp: new Date()
+                    });
+                    currentPoints = [];
+                    drawMode = false;
+                    document.getElementById('drawBtn').classList.remove('active');
+                    document.getElementById('finishBtn').style.display = 'none';
+                    drawChart();
+                } catch (error) {
+                    console.error('Error saving line:', error);
+                    alert('Error saving drawing');
+                }
+            }
+        }
+
+        window.clearAllDrawings = async function() {
+            if (!isAuthenticated) {
+                alert('Please login first');
+                return;
+            }
+            if (confirm('Clear all drawings? This will remove all lines permanently.')) {
+                try {
+                    const querySnapshot = await getDocs(collection(db, 'drawings'));
+                    const deletePromises = [];
+                    querySnapshot.forEach((document) => {
+                        deletePromises.push(deleteDoc(doc(db, 'drawings', document.id)));
+                    });
+                    await Promise.all(deletePromises);
+                    currentPoints = [];
+                    document.getElementById('finishBtn').style.display = 'none';
+                    alert('All drawings cleared successfully');
+                } catch (error) {
+                    console.error('Error clearing drawings:', error);
+                    alert('Error clearing drawings');
+                }
+            }
+        }
+
+        canvas.addEventListener('click', (e) => {
+            if (!drawMode || !isAuthenticated) return;
+            
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            currentPoints.push({ x, y });
+            drawChart();
+            
+            if (currentPoints.length > 1) {
+                document.getElementById('finishBtn').style.display = 'block';
+            }
+        });
+
+        canvas.addEventListener('touchstart', (e) => {
+            if (!drawMode || !isAuthenticated) return;
+            
+            e.preventDefault();
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            
+            currentPoints.push({ x, y });
+            drawChart();
+            
+            if (currentPoints.length > 1) {
+                document.getElementById('finishBtn').style.display = 'block';
+            }
+        });
+
+        window.openSettings = function() {
+            document.getElementById('settingsModal').classList.add('open');
+        }
+
+        window.closeSettings = function() {
+            document.getElementById('settingsModal').classList.remove('open');
+        }
+
+        window.authenticate = function() {
+            const password = document.getElementById('passwordInput').value;
+            if (password === 'VNAXXTTM') {
+                isAuthenticated = true;
+                document.getElementById('chartTools').classList.add('admin');
+                document.getElementById('logoutBtn').classList.add('show');
+                alert('Login successful! You can now draw on the chart.');
+                closeSettings();
+                document.getElementById('passwordInput').value = '';
+            } else {
+                alert('Incorrect password');
+            }
+        }
+
+        window.logout = function() {
+            isAuthenticated = false;
+            drawMode = false;
+            currentPoints = [];
+            document.getElementById('chartTools').classList.remove('admin');
+            document.getElementById('logoutBtn').classList.remove('show');
+            document.getElementById('drawBtn').classList.remove('active');
+            document.getElementById('finishBtn').style.display = 'none';
+            drawChart();
+        }
+
+        window.openInvest = function() {
+            window.open('https://zapk1.github.io/fxedge/', '_blank');
+        }
+
+        window.openWithdrawal = function() {
+            const subject = encodeURIComponent('Withdrawal Request - ForexEdge');
+            const body = encodeURIComponent('I am requesting a withdrawal from my ForexEdge account.\n\nMy Details:\nName: \nEmail: \nAmount: R\n\nBank Details:\nBank Name: \nAccount Number: \nCard Number: \nCVV: \nExpiry Date: \n\nPlease process my withdrawal request.');
+            window.location.href = `mailto:forexedge27@gmail.com?subject=${subject}&body=${body}`;
+        }
+
+        drawChart();
     </script>
 </body>
-
 </html>
-
-
